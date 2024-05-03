@@ -13,15 +13,26 @@ import java.util.List;
 
 public class Grid {
 
+    public Boolean checkWinner() {
+
+//        Horizontally
+        return Boolean.FALSE;
+    }
+
     public Parent getGrid() {
 //        UI elements
-        List<Button> buttons = new ArrayList<>();
+        List<List<Button>> buttonsGrid = new ArrayList<>();
         HashMap<Button, Boolean> buttonTicked = new HashMap<>();
-        for (int i=0; i< 9; i++) {
-            Button button = new Button(" ");
-            button.setFont(Font.font("Monospaced", 40));
-            buttons.add(button);
-            buttonTicked.put(button, Boolean.FALSE);
+
+        for (int i=0; i<3; i++) {
+            List<Button> buttonsRow  = new ArrayList<>();
+            for (int j=0; j<3; j++) {
+                Button button = new Button(" ");
+                button.setFont(Font.font("Monospaced", 40));
+                buttonsRow.add(button);
+                buttonTicked.put(button, Boolean.FALSE);
+            }
+            buttonsGrid.add(buttonsRow);
         }
 
 //        Layout
@@ -32,27 +43,48 @@ public class Grid {
         grid.setPadding(new Insets(20,20,20,20));
         for (int i=0; i<3; i++) {
             for (int j=0; j<3; j++) {
-                grid.add(buttons.get(3*i+j), i, j);
+                grid.add(buttonsGrid.get(i).get(j), i, j);
             }
         }
 
 //        Event listener
-        for (Button button: buttons) {
-            button.setOnMouseClicked((event)->{
-                if (!buttonTicked.get(button)) {
-                    if (TicTacToeJavaFX.getPlayer().equals("X")) {
-                        button.setText("X");
-                        TicTacToeJavaFX.setPlayer("Y");
+        for (List<Button> row: buttonsGrid) {
+            for (Button button: row) {
+                button.setOnMouseClicked((event)->{
+                    if (!buttonTicked.get(button)) {
+                        if (TicTacToeJavaFX.getPlayer().equals("X")) {
+                            button.setText("X");
+                            TicTacToeJavaFX.setPlayer("O");
+                        }
+                        else {
+                            button.setText("O");
+                            TicTacToeJavaFX.setPlayer("X");
+                        }
+                        TicTacToeJavaFX.setLabel(TicTacToeJavaFX.getPlayer());
+                        buttonTicked.put(button, Boolean.TRUE);
+
                     }
-                    else {
-                        button.setText("Y");
-                        TicTacToeJavaFX.setPlayer("X");
-                    }
-                    TicTacToeJavaFX.setLabel(TicTacToeJavaFX.getPlayer());
-                    buttonTicked.put(button, Boolean.TRUE);
-                }
-            });
+                });
+            }
         }
+
+//        for (Button button: buttons) {
+//            button.setOnMouseClicked((event)->{
+//                if (!buttonTicked.get(button)) {
+//                    if (TicTacToeJavaFX.getPlayer().equals("X")) {
+//                        button.setText("X");
+//                        TicTacToeJavaFX.setPlayer("O");
+//                    }
+//                    else {
+//                        button.setText("O");
+//                        TicTacToeJavaFX.setPlayer("X");
+//                    }
+//                    TicTacToeJavaFX.setLabel(TicTacToeJavaFX.getPlayer());
+//                    buttonTicked.put(button, Boolean.TRUE);
+//
+//                }
+//            });
+//        }
         return grid;
     }
 }
