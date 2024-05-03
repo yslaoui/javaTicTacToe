@@ -11,9 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Grid {
-    public  Grid() {
 
-    }
     public Parent getGrid() {
 //        UI elements
         List<Button> buttons = new ArrayList();
@@ -33,6 +31,21 @@ public class Grid {
             for (int j=0; j<3; j++) {
                 grid.add(buttons.get(3*i+j), i, j);
             }
+        }
+
+//        Event listener
+        for (Button button: buttons) {
+            button.setOnMouseClicked((event)->{
+                if (TicTacToeJavaFX.getPlayer().equals("X")) {
+                    button.setText("X");
+                    TicTacToeJavaFX.setPlayer("Y");
+                }
+                else {
+                    button.setText("Y");
+                    TicTacToeJavaFX.setPlayer("X");
+                }
+                TicTacToeJavaFX.setLabel(TicTacToeJavaFX.getPlayer());
+            });
         }
         return grid;
     }

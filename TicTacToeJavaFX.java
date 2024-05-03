@@ -11,10 +11,32 @@ import javafx.scene.text.Font;
 import java.awt.*;
 
 public class TicTacToeJavaFX extends Application {
+    private static String player;
+    private static Label turnLabel;
+    public void init() throws Exception {
+        player = "X";
+    }
+
+    public static String getPlayer() {
+        return player;
+    }
+
+    public static void setPlayer(String newPlayer) {
+        player = newPlayer;
+    }
+
+    public static Label getLabel() {
+        return turnLabel;
+    }
+
+    public static void setLabel(String newLabel) {
+        turnLabel.setText("Turn: " + newLabel);
+    }
+
     @Override
     public void start(Stage window) {
 //        UI component
-        Label turnLabel = new Label("Turn: X");
+        turnLabel = new Label("Turn: " + player);
         turnLabel.setFont(Font.font("Monospaced", 40));
 
         Label endLabel = new Label("Game End. X wins.");
