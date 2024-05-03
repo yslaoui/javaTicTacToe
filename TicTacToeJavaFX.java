@@ -1,6 +1,7 @@
 package tictactoe;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
@@ -13,24 +14,29 @@ import java.awt.*;
 public class TicTacToeJavaFX extends Application {
     private static String player;
     private static Label turnLabel;
+    private static Boolean gameOn;
+
     public void init() throws Exception {
         player = "X";
+        gameOn = Boolean.TRUE;
     }
 
     public static String getPlayer() {
         return player;
     }
-
     public static void setPlayer(String newPlayer) {
         player = newPlayer;
     }
 
-    public static Label getLabel() {
-        return turnLabel;
+    public static void setTurnLabel(String newLabel) {
+        turnLabel.setText(newLabel);
     }
 
-    public static void setLabel(String newLabel) {
-        turnLabel.setText("Turn: " + newLabel);
+    public static Boolean getGameOn() {
+        return gameOn;
+    }
+    public static void setGameOn(Boolean gameState) {
+        gameOn = gameState;
     }
 
     @Override
@@ -38,9 +44,8 @@ public class TicTacToeJavaFX extends Application {
 //        UI component
         turnLabel = new Label("Turn: " + player);
         turnLabel.setFont(Font.font("Monospaced", 40));
+        turnLabel.setAlignment(Pos.CENTER);
 
-        Label endLabel = new Label("Game End. X wins.");
-        endLabel.setFont(Font.font("Monospaced", 40));
 
 //        Layouts
         Grid gridObject = new Grid();
@@ -48,7 +53,6 @@ public class TicTacToeJavaFX extends Application {
 
         BorderPane mainLayout = new BorderPane();
         mainLayout.setTop(turnLabel);
-        mainLayout.setBottom(endLabel);
         mainLayout.setCenter(grid);
 
 //        Scene
