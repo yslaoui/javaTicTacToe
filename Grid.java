@@ -8,17 +8,20 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Grid {
 
     public Parent getGrid() {
 //        UI elements
-        List<Button> buttons = new ArrayList();
+        List<Button> buttons = new ArrayList<>();
+        HashMap<Button, Boolean> buttonTicked = new HashMap<>();
         for (int i=0; i< 9; i++) {
             Button button = new Button(" ");
             button.setFont(Font.font("Monospaced", 40));
             buttons.add(button);
+            buttonTicked.put(button, Boolean.FALSE);
         }
 
 //        Layout
@@ -36,15 +39,18 @@ public class Grid {
 //        Event listener
         for (Button button: buttons) {
             button.setOnMouseClicked((event)->{
-                if (TicTacToeJavaFX.getPlayer().equals("X")) {
-                    button.setText("X");
-                    TicTacToeJavaFX.setPlayer("Y");
+                if (!buttonTicked.get(button)) {
+                    if (TicTacToeJavaFX.getPlayer().equals("X")) {
+                        button.setText("X");
+                        TicTacToeJavaFX.setPlayer("Y");
+                    }
+                    else {
+                        button.setText("Y");
+                        TicTacToeJavaFX.setPlayer("X");
+                    }
+                    TicTacToeJavaFX.setLabel(TicTacToeJavaFX.getPlayer());
+                    buttonTicked.put(button, Boolean.TRUE);
                 }
-                else {
-                    button.setText("Y");
-                    TicTacToeJavaFX.setPlayer("X");
-                }
-                TicTacToeJavaFX.setLabel(TicTacToeJavaFX.getPlayer());
             });
         }
         return grid;
